@@ -1,0 +1,21 @@
+NAME
+    Acme::Module::Checker - check a modules you are installed
+
+SYNOPSIS
+        use Acme::Module::Checker;
+        Acme::Module::Checker->new()->check();
+
+DESCRIPTION
+    Acme::Module::Checker checks a modules you are installed, in tokuhirom's
+    rule.
+
+AUTHOR
+    Tokuhiro Matsuno <tokuhirom AAJKLFJEF@ GMAIL COM>
+
+SEE ALSO
+LICENSE
+    Copyright (C) Tokuhiro Matsuno
+
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
