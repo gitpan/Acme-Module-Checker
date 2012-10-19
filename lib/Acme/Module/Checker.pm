@@ -2,7 +2,7 @@ package Acme::Module::Checker;
 use strict;
 use warnings;
 use 5.008008;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use version;
 use ExtUtils::MakeMaker;
 use Carp;
@@ -38,6 +38,12 @@ my @BUG = (
     ['HTTP::MobileAgent' => '0.35', 'Updated $HTMLVerMap and $GPSModelsRe in DoCoMo.pm'],
     ['Encode::JP::Mobile' => '0.25', 'resolved FULLWIDTH TILDE issue, etc.'],
     ['Template' => '2.15', 'uri filter does not works properly https://rt.cpan.org/Public/Bug/Display.html?id=19593'],
+
+);
+
+my @BROKEN = (
+    ['Math::Random::MT' => '1.15', 'rand() took no notice of argument RT #78200'],
+    ['Module::Install' => '1.04', 'Broken, http://weblog.bulknews.net/post/33907905561/do-not-ship-modules-with-module-install-1-04'],
 );
 
 my @XS = (
@@ -89,6 +95,7 @@ sub check {
     $failed += $self->check_security();
     $failed += $self->check_performance();
     $failed += $self->check_bugs();
+    $failed += $self->check_bugs_on_specific_version();
     $failed += $self->check_xs_installed();
     $failed += $self->check_feature();
     return $failed;
@@ -125,6 +132,23 @@ sub check_performance {
 sub check_bugs {
     my $self = shift;
     $self->_check_issue(\@BUG, 'BUG');
+}
+
+sub check_bugs_on_specific_version {
+    my ($self) = @_;
+    my $failed = 0;
+    for my $row (@BROKEN) {
+        my $ver = get_version($row->[0]);
+        if (defined $ver) {
+            $self->debugf("$row->[0] $ver");
+            if (version->new($ver) == version->new($row->[1])) {
+                printf "[BROKEN] %s %s: %s\n", $row->[0], $ver, $row->[2];
+                $failed++;
+            }
+        } else {
+            $self->debugf("$row->[0] is not found");
+        }
+    }
 }
 
 sub check_xs_installed {
