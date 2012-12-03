@@ -2,7 +2,7 @@ package Acme::Module::Checker;
 use strict;
 use warnings;
 use 5.008008;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 use version;
 use ExtUtils::MakeMaker;
 use Carp;
@@ -42,6 +42,7 @@ my @BUG = (
 );
 
 my @BROKEN = (
+    ['Amon2::DBI' => '0.31', 'transaction management bug'],
     ['Math::Random::MT' => '1.15', 'rand() took no notice of argument RT #78200'],
     ['Module::Install' => '1.04', 'Broken, http://weblog.bulknews.net/post/33907905561/do-not-ship-modules-with-module-install-1-04'],
 );
