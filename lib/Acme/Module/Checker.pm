@@ -2,7 +2,7 @@ package Acme::Module::Checker;
 use strict;
 use warnings;
 use 5.008008;
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 use version;
 use ExtUtils::MakeMaker;
 use Carp;
@@ -39,6 +39,7 @@ my @BUG = (
     ['HTTP::MobileAgent' => '0.35', 'Updated $HTMLVerMap and $GPSModelsRe in DoCoMo.pm'],
     ['Encode::JP::Mobile' => '0.25', 'resolved FULLWIDTH TILDE issue, etc.'],
     ['Template' => '2.15', 'uri filter does not works properly https://rt.cpan.org/Public/Bug/Display.html?id=19593'],
+    ['HTML::FillInForm::Lite' => '1.11', 'HTML5 style tags support'],
 
 );
 
